@@ -8,34 +8,55 @@ using System.Text;
 
 namespace Business.Concrete
 {
-    public class CarManager: ICarService
+    public class CarManager : ICarService
     {
         ICarDal _carDal;
-        private InMemoryCarDal inMemoryCarDal;
-        private InMemoryCarDal inMemoryCarDal1;
+        //private InMemoryCarDal inMemoryCarDal;
 
-        public CarManager()
-        {
-        }
+
 
         public CarManager(ICarDal carDal)
         {
             _carDal = carDal;
         }
 
-        public CarManager(InMemoryCarDal inMemoryCarDal)
+        public void Add(Car entity)
         {
-            this.inMemoryCarDal = inMemoryCarDal;
+            if (entity.CarName.Length>=2 && entity.DailyPrice>0)
+            {
+                _carDal.Add(entity);
+            }
+            else
+            {
+                Console.WriteLine("Bilgiler dogru girilmemisdir!");
+            }
+            
         }
 
-        public CarManager(InMemoryCarDal inMemoryCarDal)
-        {
-            this.inMemoryCarDal = inMemoryCarDal;
-        }
+        //public CarManager(InMemoryCarDal inMemoryCarDal)
+        //{
+        //    this.inMemoryCarDal = inMemoryCarDal;
+        //}
+
 
         public List<Car> GetAll()
         {
             return _carDal.GetALL();
+        }
+
+        public Car GetById(int carId)
+        {
+            return _carDal.GetById(carId);
+        }
+
+        public List<Car> GetCarsByBrandId(int brandId)
+        {
+            return _carDal.GetCarsByBrandId(brandId);
+        }
+
+        public List<Car> GetCarsByColorId(int colorId)
+        {
+            return _carDal.GetCarsByColorId(colorId);
         }
 
     }
