@@ -12,43 +12,61 @@ namespace ConsoleUI
     {
         static void Main(string[] args)
         {
-          
-
-            while (true)
+            //Lesson8();
+            try
             {
                 CarManager carManager = new CarManager(new EfCarDal());
-                BrandManager brandManager = new BrandManager(new EfBrandDal());
-                ColorManager colorManager = new ColorManager(new EfColorDal());
-                Console.WriteLine("Car'inizi giriniz:");
-                string carName = Console.ReadLine();
-                Console.WriteLine("GunlukFiyatinizi giriniz:");
-                decimal dailyPrice = Convert.ToDecimal(Console.ReadLine());
-                Console.WriteLine("Description'inizi giriniz:");
-                string description = Console.ReadLine();
-                foreach (var brand in brandManager.GetAll())
+                foreach (var car in carManager.GetCarDetails())
                 {
-                    Console.WriteLine(String.Format("{0}:{1}", brand.BrandId, brand.BrandName));
+                    Console.WriteLine(car.CarName + "/" + car.BrindName + "/" + car.ColorName + "/" + car.DailyPrice);
                 }
-                Console.WriteLine("Brand'inizi giriniz:");
-                int brandId = Convert.ToInt32(Console.ReadLine());
-                foreach (var color in colorManager.GetAll())
-                {
-                    Console.WriteLine(String.Format("{0}:{1}", color.ColorId, color.ColorName));
-                }
-                Console.WriteLine("Color'unuzu giriniz:");
-                int colorId = Convert.ToInt32(Console.ReadLine());
-                Car car = new Car()
-                {
-                    CarName = carName,
-                    DailyPrice = dailyPrice,
-                    Description = description,
-                    BrandId = brandId,
-                    ColorId = colorId,
-                    ModelYear = Convert.ToDateTime(DateTime.Now)
-
-                };
-                carManager.Add(car);
             }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine(ex);
+            }
+           
+        }
+
+        //private static void Lesson8()
+        //{
+        //    while (true)
+        //    {
+        //        CarManager carManager = new CarManager(new EfCarDal());
+        //        BrandManager brandManager = new BrandManager(new EfBrandDal());
+        //        ColorManager colorManager = new ColorManager(new EfColorDal());
+        //        Console.WriteLine("Car'inizi giriniz:");
+        //        string carName = Console.ReadLine();
+        //        Console.WriteLine("GunlukFiyatinizi giriniz:");
+        //        decimal dailyPrice = Convert.ToDecimal(Console.ReadLine());
+        //        Console.WriteLine("Description'inizi giriniz:");
+        //        string description = Console.ReadLine();
+        //        foreach (var brand in brandManager.GetAll())
+        //        {
+        //            Console.WriteLine(String.Format("{0}:{1}", brand.BrandId, brand.BrandName));
+        //        }
+        //        Console.WriteLine("Brand'inizi giriniz:");
+        //        int brandId = Convert.ToInt32(Console.ReadLine());
+        //        foreach (var color in colorManager.GetAll())
+        //        {
+        //            Console.WriteLine(String.Format("{0}:{1}", color.ColorId, color.ColorName));
+        //        }
+        //        Console.WriteLine("Color'unuzu giriniz:");
+        //        int colorId = Convert.ToInt32(Console.ReadLine());
+        //        Car car = new Car()
+        //        {
+        //            CarName = carName,
+        //            DailyPrice = dailyPrice,
+        //            Description = description,
+        //            BrandId = brandId,
+        //            ColorId = colorId,
+        //            ModelYear = Convert.ToDateTime(DateTime.Now)
+
+        //        };
+        //        carManager.Add(car);
+        //    }
+        //}
             //Console.WriteLine("Renk id'yi giriniz:");
             //int colorId = Convert.ToInt32(Console.ReadLine());
             //Console.WriteLine("Marka id'yi giriniz:");
@@ -62,8 +80,6 @@ namespace ConsoleUI
             //{
             //    Console.WriteLine(car.CarName);
             //}
-
-        }
     }
 
 
