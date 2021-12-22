@@ -69,6 +69,11 @@ namespace DataAccess.Concrete.InMemory
             throw new NotImplementedException();
         }
 
+        public List<Car> GetAll()
+        {
+            throw new NotImplementedException();
+        }
+
         public List<Car> GetAllBy(int brandId, int colorId)
         {
             return _cars.Where(c => c.BrandId == brandId && c.ColorId == colorId).ToList();

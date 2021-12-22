@@ -14,12 +14,21 @@ namespace Core.DataAccess.EntityFramework
     {
         public void Add(TEntity entity)
         {
-            using (TContext context = new TContext())
+            try
             {
-                var addedEntity = context.Entry(entity);
-                addedEntity.State = EntityState.Added;
-                context.SaveChanges();
+                using (TContext context = new TContext())
+                {
+                    var addedEntity = context.Entry(entity);
+                    addedEntity.State = EntityState.Added;
+                    context.SaveChanges();
+                }
             }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine(ex);
+            }
+           
         }
 
         public void Delete(TEntity entity)
@@ -44,20 +53,24 @@ namespace Core.DataAccess.EntityFramework
         {
             using (TContext context = new TContext())
             {
-                return filter == null
-                    ? context.Set<TEntity>().ToList()
-                    : context.Set<TEntity>().Where(filter).ToList();
-            }
+                try
+                {
+                    return filter == null
+                   ? context.Set<TEntity>().ToList()
+                   : context.Set<TEntity>().Where(filter).ToList();
+                }
+                catch (Exception ex)
+                {
+
+                    Console.WriteLine(ex.Message);
+                }
+
+                return null;
+
+            }   
         }
 
         
-
-
-        public List<TEntity> GetAllBy(int brandId, int colorId)
-        {
-            throw new NotImplementedException();
-        }
-
         public void Update(TEntity entity)
         {
             using (TContext context = new TContext())
