@@ -18,7 +18,7 @@ namespace ConsoleUI
             //Lesson9();
             CarGetAll();
             //BrandGetAll();
-            //ColorGetAll();  
+            //CarColorGetAll();  
             //CarDelete();
             //BrandDelete();
             //BrandAdd();
@@ -152,8 +152,8 @@ namespace ConsoleUI
 
         private static void ColorGetAll()
         {
-            ColorManager colorManager = new ColorManager(new EfColorDal());
-            foreach (var color in colorManager.GetAll().Data)
+            ColorManager carColorManager = new ColorManager(new EfColorDal());
+            foreach (var color in carColorManager.GetAll().Data)
             {
                 Console.WriteLine(color.ColorName);
             }
@@ -171,7 +171,7 @@ namespace ConsoleUI
         private static void CarGetAll()
         {
             CarManager carManager = new CarManager(new EfCarDal());
-            foreach (var car in carManager.GetALL().Data)
+            foreach (var car in carManager.GetAll().Data)
             {
                 Console.WriteLine(car.CarName+"/"+car.CarId);
             }

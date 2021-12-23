@@ -26,14 +26,20 @@ namespace Business.Concrete
             _userDal.Delete(entity);
             return new SuccessResult(Messages.Deleted);
         }
-        public IDataResult<List<User>> GetALL()
+        public IDataResult<List<User>> GetAll()
         {
             if (DateTime.Now.Hour == 18)
             {
                 return new ErrorDataResult<List<User>>(Messages.MaintenanceTime);
             }
-            return new SuccessDataResult<List<User>>(_userDal.GetALL(), Messages.Listed);
+            return new SuccessDataResult<List<User>>(_userDal.GetAll(), Messages.Listed);
         }
+
+        public IDataResult<User> GetById(int userId)
+        {
+            return new SuccessDataResult<User>(_userDal.Get(c => c.Id == userId));
+        }
+
         public IResult Update(User entity)
         {
             _userDal.Update(entity);

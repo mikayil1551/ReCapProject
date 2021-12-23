@@ -37,13 +37,13 @@ namespace Business.Concrete
         //{
         //    this.inMemoryCarDal = inMemoryCarDal;
         //}
-        public IDataResult<List<Car>> GetALL()
+        public IDataResult<List<Car>> GetAll()
         {
-            if (DateTime.Now.Hour == 13)
+            if (DateTime.Now.Hour == 12)
             {
                 return new ErrorDataResult<List<Car>>(Messages.MaintenanceTime);
             }
-            return new SuccessDataResult<List<Car>>(_carDal.GetALL(), Messages.Listed);
+            return new SuccessDataResult<List<Car>>(_carDal.GetAll(), Messages.Listed);
         }
         public IDataResult<List<Car>> GetAllBy(int brandId, int colorId)
         {
@@ -59,11 +59,17 @@ namespace Business.Concrete
         }
         public IDataResult<List<Car>> GetCarsByBrandId(int brandId)
         {
-            return new SuccessDataResult<List<Car>>(_carDal.GetALL(c => c.BrandId == brandId));
+            return new SuccessDataResult<List<Car>>(_carDal.GetAll(c => c.BrandId == brandId));
         }
         public IDataResult<List<Car>> GetCarsByColorId(int colorId)
         {
-            return new SuccessDataResult<List<Car>>(_carDal.GetALL(p => p.ColorId == colorId));
-        }   
+            return new SuccessDataResult<List<Car>>(_carDal.GetAll(p => p.ColorId == colorId));
+        }
+
+        public IResult Update(Car car)
+        {
+            _carDal.Update(car);
+            return new SuccessResult(Messages.Updated);
+        }
     }
 }

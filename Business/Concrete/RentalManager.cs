@@ -47,18 +47,18 @@ namespace Business.Concrete
             _rentalDal.Delete(entity);
             return new SuccessResult(Messages.Deleted);
         }
-        public IDataResult<List<Rental>> GetALL()
+        public IDataResult<List<Rental>> GetAll()
         {
             if (DateTime.Now.Hour == 18)
             {
                 return new ErrorDataResult<List<Rental>>(Messages.MaintenanceTime);
             }
-            return new SuccessDataResult<List<Rental>>(_rentalDal.GetALL(), Messages.Listed);
+            return new SuccessDataResult<List<Rental>>(_rentalDal.GetAll(), Messages.Listed);
         }
 
         public IDataResult<List<Rental>> GetAllById(int rentCarId)
         {
-            return new SuccessDataResult<List<Rental>>(_rentalDal.GetALL(x => x.CarId == rentCarId), Messages.Listed);
+            return new SuccessDataResult<List<Rental>>(_rentalDal.GetAll(x => x.CarId == rentCarId), Messages.Listed);
         }
         public IResult Update(Rental entity)
         {

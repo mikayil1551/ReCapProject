@@ -29,11 +29,11 @@ namespace DataAccess.Concrete.EntityFramework
             }
         }
 
-        public List<Car> GetCarsByColorId(int colorId)
+        public List<Car> GetCarsByColorId(int carColorId)
         {
             using (ReCapContext context = new ReCapContext())
             {
-                return context.Set<Car>().Where(x => x.ColorId == colorId).ToList();
+                return context.Set<Car>().Where(x => x.ColorId == carColorId).ToList();
             }
         }
 

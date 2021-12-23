@@ -30,14 +30,20 @@ namespace Business.Concrete
             _customerDal.Delete(entity);
             return new SuccessResult(Messages.Deleted);
         }
-        public IDataResult<List<Customer>> GetALL()
+        public IDataResult<List<Customer>> GetAll()
         {
             if (DateTime.Now.Hour == 18)
             {
                 return new ErrorDataResult<List<Customer>>(Messages.MaintenanceTime);
             }
-            return new SuccessDataResult<List<Customer>>(_customerDal.GetALL(), Messages.Listed);
+            return new SuccessDataResult<List<Customer>>(_customerDal.GetAll(), Messages.Listed);
         }
+
+        public IDataResult<Customer> GetById(int customerId)
+        {
+            return new SuccessDataResult<Customer>(_customerDal.Get(c => c.CustomerId == customerId));
+        }
+
         public IResult Update(Customer entity)
         {
             _customerDal.Update(entity);

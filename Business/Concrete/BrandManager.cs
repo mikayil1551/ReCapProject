@@ -26,11 +26,11 @@ namespace Business.Concrete
         }
         public IDataResult<List<Brand>> GetAll()
         {
-            return new SuccessDataResult<List<Brand>>(_brandDal.GetALL(), Messages.Listed);
+            return new SuccessDataResult<List<Brand>>(_brandDal.GetAll(), Messages.Listed);
         }
         public IDataResult<List<Brand>> GetAllById(int brandId)
         {
-            return new SuccessDataResult<List<Brand>>(_brandDal.GetALL(x=>x.BrandId==brandId));
+            return new SuccessDataResult<List<Brand>>(_brandDal.GetAll(x=>x.BrandId==brandId));
         }
         public IDataResult<Brand> GetById(int brandId)
         {

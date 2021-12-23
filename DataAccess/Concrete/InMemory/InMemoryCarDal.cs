@@ -59,20 +59,17 @@ namespace DataAccess.Concrete.InMemory
             throw new NotImplementedException();
         }
 
-        public List<Car> GetALL()
+        public List<Car> GetAll()
         {
             return _cars;
         }
 
-        public List<Car> GetALL(Expression<Func<Car, bool>> filter = null)
+        public List<Car> GetAll(Expression<Func<Car, bool>> filter = null)
         {
             throw new NotImplementedException();
         }
 
-        public List<Car> GetAll()
-        {
-            throw new NotImplementedException();
-        }
+       
 
         public List<Car> GetAllBy(int brandId, int colorId)
         {
