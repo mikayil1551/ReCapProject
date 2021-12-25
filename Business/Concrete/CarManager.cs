@@ -1,5 +1,7 @@
 ﻿using Business.Abstract;
 using Business.Constants;
+using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using DataAccess.Concrete.InMemory;
@@ -19,19 +21,18 @@ namespace Business.Concrete
         {
             _carDal = carDal;
         }
-        public IResult Add(Car entity)
-        {
-            if (entity.CarName.Length<=2 && entity.DailyPrice<0)
-            {
-                return new ErrorResult(Messages.NameInvalid);
-            }
-            _carDal.Add(entity);    
+        [ValidationAspect(typeof(CarValidator))]
+        public IResult Add(Car car)
+        {  
+            _carDal.Add(car);    
             return new SuccessResult(Messages.Added);
-        } 
-        public IResult Delete(Car entity)
+        }
+        [ValidationAspect(typeof(CarValidator))]
+        public IResult Delete(Car car)
         {
-            _carDal.Delete(entity);
-            return new SuccessResult(Messages.Deleted);
+           _carDal.UpdateDelete(car);
+           return new SuccessResult(Messages.Deleted);
+
         }
         //public CarManager(InMemoryCarDal inMemoryCarDal)
         //{
@@ -43,7 +44,7 @@ namespace Business.Concrete
             {
                 return new ErrorDataResult<List<Car>>(Messages.MaintenanceTime);
             }
-            return new SuccessDataResult<List<Car>>(_carDal.GetAll(), Messages.Listed);
+            return new SuccessDataResult<List<Car>>(_carDal.GetAll(x=>x.IsDelete==false), Messages.Listed);
         }
         public IDataResult<List<Car>> GetAllBy(int brandId, int colorId)
         {
@@ -70,6 +71,11 @@ namespace Business.Concrete
         {
             _carDal.Update(car);
             return new SuccessResult(Messages.Updated);
+        }
+        public IResult UpdateDelete(Car car)
+        {
+            _carDal.UpdateDelete(car);
+            return new SuccessResult(Messages.Deleted);
         }
     }
 }

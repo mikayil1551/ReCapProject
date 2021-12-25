@@ -1,5 +1,7 @@
 ﻿using Business.Abstract;
 using Business.Constants;
+using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -16,14 +18,17 @@ namespace Business.Concrete
         {
             _userDal = userDal;
         }
-        public IResult Add(User entity)
+
+        [ValidationAspect(typeof(UserValidator))]
+
+        public IResult Add(User user)
         {
-            _userDal.Add(entity);
+            _userDal.Add(user);
             return new SuccessResult(Messages.Added);
         }
-        public IResult Delete(User entity)
+        public IResult Delete(User user)
         {
-            _userDal.Delete(entity);
+            _userDal.UpdateDelete(user);
             return new SuccessResult(Messages.Deleted);
         }
         public IDataResult<List<User>> GetAll()
@@ -32,7 +37,7 @@ namespace Business.Concrete
             {
                 return new ErrorDataResult<List<User>>(Messages.MaintenanceTime);
             }
-            return new SuccessDataResult<List<User>>(_userDal.GetAll(), Messages.Listed);
+            return new SuccessDataResult<List<User>>(_userDal.GetAll(x => x.IsDelete == false), Messages.Listed);
         }
 
         public IDataResult<User> GetById(int userId)
@@ -40,10 +45,16 @@ namespace Business.Concrete
             return new SuccessDataResult<User>(_userDal.Get(c => c.Id == userId));
         }
 
-        public IResult Update(User entity)
+        public IResult Update(User user)
         {
-            _userDal.Update(entity);
+            _userDal.Update(user);
             return new SuccessResult(Messages.Updated);
+        }
+
+        public IResult UpdateDelete(User user)
+        {
+            _userDal.UpdateDelete(user);
+            return new SuccessResult(Messages.Deleted);
         }
     }
 }

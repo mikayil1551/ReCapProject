@@ -16,18 +16,18 @@ namespace Business.Concrete
         {
             _customerDal = customerDal;
         }
-        public IResult Add(Customer entity)
+        public IResult Add(Customer customer)
         {
-            if (entity.CompanyName.Length <= 2)
+            if (customer.CompanyName.Length <= 2)
             {
                 return new ErrorResult(Messages.NameInvalid);
             }
-            _customerDal.Add(entity);
+            _customerDal.Add(customer);
             return new SuccessResult(Messages.Added);
         }
-        public IResult Delete(Customer entity)
+        public IResult Delete(Customer customer)
         {
-            _customerDal.Delete(entity);
+            _customerDal.UpdateDelete(customer);
             return new SuccessResult(Messages.Deleted);
         }
         public IDataResult<List<Customer>> GetAll()
@@ -36,7 +36,7 @@ namespace Business.Concrete
             {
                 return new ErrorDataResult<List<Customer>>(Messages.MaintenanceTime);
             }
-            return new SuccessDataResult<List<Customer>>(_customerDal.GetAll(), Messages.Listed);
+            return new SuccessDataResult<List<Customer>>(_customerDal.GetAll(x => x.IsDelete == false), Messages.Listed);
         }
 
         public IDataResult<Customer> GetById(int customerId)
@@ -44,10 +44,16 @@ namespace Business.Concrete
             return new SuccessDataResult<Customer>(_customerDal.Get(c => c.CustomerId == customerId));
         }
 
-        public IResult Update(Customer entity)
+        public IResult Update(Customer customer)
         {
-            _customerDal.Update(entity);
+            _customerDal.Update(customer);
             return new SuccessResult(Messages.Updated);
+        }
+
+        public IResult UpdateDelete(Customer customer)
+        {
+            _customerDal.UpdateDelete(customer);
+            return new SuccessResult(Messages.Deleted);
         }
     }
 }

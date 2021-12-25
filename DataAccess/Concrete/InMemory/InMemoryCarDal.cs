@@ -106,5 +106,10 @@ namespace DataAccess.Concrete.InMemory
             carToUpdate.BrandId = car.BrandId;
             carToUpdate.ModelYear = car.ModelYear;
         }
+
+        public void UpdateDelete(Car entity)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

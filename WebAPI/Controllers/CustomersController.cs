@@ -52,7 +52,9 @@ namespace WebAPI.Controllers
         [HttpPost("delete")]
         public IActionResult Delete(Customer customer)
         {
-            var result = _customerService.Delete(customer);
+            var data = customer;
+            customer.IsDelete = true;
+            var result = _customerService.UpdateDelete(data);
             if (result.Success)
             {
                 return Ok(result);

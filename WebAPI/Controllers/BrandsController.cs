@@ -21,6 +21,7 @@ namespace WebAPI.Controllers
         [HttpGet("getall")]
         public IActionResult GetAll()
         {
+
             var result = _brandService.GetAll();
             if (result.Success)
             {
@@ -51,7 +52,9 @@ namespace WebAPI.Controllers
         [HttpPost("delete")]
         public IActionResult Delete(Brand brand)
         {
-            var result = _brandService.Delete(brand);
+            var data = brand;
+            brand.IsDelete = true;
+            var result = _brandService.UpdateDelete(data);
             if (result.Success)
             {
                 return Ok(result);

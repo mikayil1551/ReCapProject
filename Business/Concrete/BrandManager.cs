@@ -19,14 +19,14 @@ namespace Business.Concrete
             _brandDal = brandDal;   
         }
 
-        public IResult Add(Brand entity)
+        public IResult Add(Brand brand)
         {
-            _brandDal.Add(entity);
+            _brandDal.Add(brand);
             return new SuccessResult(Messages.Added);
         }
         public IDataResult<List<Brand>> GetAll()
         {
-            return new SuccessDataResult<List<Brand>>(_brandDal.GetAll(), Messages.Listed);
+            return new SuccessDataResult<List<Brand>>(_brandDal.GetAll(x => x.IsDelete == false), Messages.Listed);
         }
         public IDataResult<List<Brand>> GetAllById(int brandId)
         {
@@ -36,15 +36,21 @@ namespace Business.Concrete
         {
             return new SuccessDataResult<Brand>(_brandDal.Get(c => c.BrandId == brandId));
         }
-        public IResult Delete(Brand entity)
+        public IResult Delete(Brand brand)
         {
-            _brandDal.Delete(entity);
+            _brandDal.UpdateDelete(brand);
             return new SuccessResult(Messages.Deleted);
         }
-        public IResult Update(Brand entity)
+        public IResult Update(Brand brand)
         {
-            _brandDal.Update(entity);
+            _brandDal.Update(brand);
             return new SuccessResult(Messages.Updated);
+        }
+
+        public IResult UpdateDelete(Brand brand)
+        {
+            _brandDal.UpdateDelete(brand);
+            return new SuccessResult(Messages.Deleted);
         }
     }
 }

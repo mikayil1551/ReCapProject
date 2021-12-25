@@ -17,14 +17,14 @@ namespace Business.Concrete
         {
             _rentalDal = rentalDal;
         }
-        public IResult Add(Rental entity)
+        public IResult Add(Rental rental)
         {
-            var result = _rentalDal.GetOrderByReturnDate(entity.CarId);
+            var result = _rentalDal.GetOrderByReturnDate(rental.CarId);
             if (result != null)
             {
                 if (result.ReturnDate < DateTime.Now)
                 {
-                    _rentalDal.Add(entity);
+                    _rentalDal.Add(rental);
                     return new SuccessResult(Messages.Added);
                 }
                 else
@@ -34,7 +34,7 @@ namespace Business.Concrete
             }
             else
             {
-                _rentalDal.Add(entity);
+                _rentalDal.Add(rental);
                 return new SuccessResult(Messages.Added);
             }
         }
@@ -42,9 +42,9 @@ namespace Business.Concrete
         {
             return new SuccessDataResult<Rental>(_rentalDal.Get(c => c.Id == rentCarId));
         }
-        public IResult Delete(Rental entity)
+        public IResult Delete(Rental rental)
         {
-            _rentalDal.Delete(entity);
+            _rentalDal.UpdateDelete(rental);
             return new SuccessResult(Messages.Deleted);
         }
         public IDataResult<List<Rental>> GetAll()
@@ -53,22 +53,28 @@ namespace Business.Concrete
             {
                 return new ErrorDataResult<List<Rental>>(Messages.MaintenanceTime);
             }
-            return new SuccessDataResult<List<Rental>>(_rentalDal.GetAll(), Messages.Listed);
+            return new SuccessDataResult<List<Rental>>(_rentalDal.GetAll(x => x.IsDelete == false), Messages.Listed);
         }
 
         public IDataResult<List<Rental>> GetAllById(int rentCarId)
         {
             return new SuccessDataResult<List<Rental>>(_rentalDal.GetAll(x => x.CarId == rentCarId), Messages.Listed);
         }
-        public IResult Update(Rental entity)
+        public IResult Update(Rental rental)
         {
-            _rentalDal.Update(entity);
+            _rentalDal.Update(rental);
             return new SuccessResult(Messages.Updated);
         }
 
         public IDataResult<Rental> GetOrderByReturnDate(int carId)
         {
             return new SuccessDataResult<Rental>(_rentalDal.GetOrderByReturnDate(carId));
+        }
+
+        public IResult UpdateDelete(Rental rental)
+        {
+            _rentalDal.UpdateDelete(rental);
+            return new SuccessResult(Messages.Deleted);
         }
     }
 }
