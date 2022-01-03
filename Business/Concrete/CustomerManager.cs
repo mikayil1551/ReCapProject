@@ -20,23 +20,23 @@ namespace Business.Concrete
         {
             if (customer.CompanyName.Length <= 2)
             {
-                return new ErrorResult(Messages.NameInvalid);
+                return new ErrorResult(MessagesCommon.NameInvalid);
             }
             _customerDal.Add(customer);
-            return new SuccessResult(Messages.Added);
+            return new SuccessResult(MessagesCommon.Added);
         }
         public IResult Delete(Customer customer)
         {
             _customerDal.UpdateDelete(customer);
-            return new SuccessResult(Messages.Deleted);
+            return new SuccessResult(MessagesCommon.Deleted);
         }
         public IDataResult<List<Customer>> GetAll()
         {
             if (DateTime.Now.Hour == 18)
             {
-                return new ErrorDataResult<List<Customer>>(Messages.MaintenanceTime);
+                return new ErrorDataResult<List<Customer>>(MessagesCommon.MaintenanceTime);
             }
-            return new SuccessDataResult<List<Customer>>(_customerDal.GetAll(x => x.IsDelete == false), Messages.Listed);
+            return new SuccessDataResult<List<Customer>>(_customerDal.GetAll(x => x.IsDelete == false), MessagesCommon.Listed);
         }
 
         public IDataResult<Customer> GetById(int customerId)
@@ -47,13 +47,13 @@ namespace Business.Concrete
         public IResult Update(Customer customer)
         {
             _customerDal.Update(customer);
-            return new SuccessResult(Messages.Updated);
+            return new SuccessResult(MessagesCommon.Updated);
         }
 
         public IResult UpdateDelete(Customer customer)
         {
             _customerDal.UpdateDelete(customer);
-            return new SuccessResult(Messages.Deleted);
+            return new SuccessResult(MessagesCommon.Deleted);
         }
     }
 }

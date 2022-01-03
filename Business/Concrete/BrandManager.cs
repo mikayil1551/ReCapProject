@@ -22,11 +22,11 @@ namespace Business.Concrete
         public IResult Add(Brand brand)
         {
             _brandDal.Add(brand);
-            return new SuccessResult(Messages.Added);
+            return new SuccessResult(MessagesCommon.Added);
         }
         public IDataResult<List<Brand>> GetAll()
         {
-            return new SuccessDataResult<List<Brand>>(_brandDal.GetAll(x => x.IsDelete == false), Messages.Listed);
+            return new SuccessDataResult<List<Brand>>(_brandDal.GetAll(x => x.IsDelete == false), MessagesCommon.Listed);
         }
         public IDataResult<List<Brand>> GetAllById(int brandId)
         {
@@ -39,18 +39,18 @@ namespace Business.Concrete
         public IResult Delete(Brand brand)
         {
             _brandDal.UpdateDelete(brand);
-            return new SuccessResult(Messages.Deleted);
+            return new SuccessResult(MessagesCommon.Deleted);
         }
         public IResult Update(Brand brand)
         {
             _brandDal.Update(brand);
-            return new SuccessResult(Messages.Updated);
+            return new SuccessResult(MessagesCommon.Updated);
         }
 
         public IResult UpdateDelete(Brand brand)
         {
             _brandDal.UpdateDelete(brand);
-            return new SuccessResult(Messages.Deleted);
+            return new SuccessResult(MessagesCommon.Deleted);
         }
     }
 }

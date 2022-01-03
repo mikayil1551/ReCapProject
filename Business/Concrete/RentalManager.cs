@@ -1,5 +1,6 @@
 ﻿using Business.Abstract;
 using Business.Constants;
+using Business.Constants.Messages;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -25,17 +26,17 @@ namespace Business.Concrete
                 if (result.ReturnDate < DateTime.Now)
                 {
                     _rentalDal.Add(rental);
-                    return new SuccessResult(Messages.Added);
+                    return new SuccessResult(MessagesCommon.Added);
                 }
                 else
                 {
-                    return new ErrorResult(Messages.Rented);
+                    return new ErrorResult(RentalMessages.Rented);
                 }
             }
             else
             {
                 _rentalDal.Add(rental);
-                return new SuccessResult(Messages.Added);
+                return new SuccessResult(MessagesCommon.Added);
             }
         }
         public IDataResult<Rental> GetById(int rentCarId)
@@ -45,25 +46,25 @@ namespace Business.Concrete
         public IResult Delete(Rental rental)
         {
             _rentalDal.UpdateDelete(rental);
-            return new SuccessResult(Messages.Deleted);
+            return new SuccessResult(MessagesCommon.Deleted);
         }
         public IDataResult<List<Rental>> GetAll()
         {
             if (DateTime.Now.Hour == 18)
             {
-                return new ErrorDataResult<List<Rental>>(Messages.MaintenanceTime);
+                return new ErrorDataResult<List<Rental>>(MessagesCommon.MaintenanceTime);
             }
-            return new SuccessDataResult<List<Rental>>(_rentalDal.GetAll(x => x.IsDelete == false), Messages.Listed);
+            return new SuccessDataResult<List<Rental>>(_rentalDal.GetAll(x => x.IsDelete == false), MessagesCommon.Listed);
         }
 
         public IDataResult<List<Rental>> GetAllById(int rentCarId)
         {
-            return new SuccessDataResult<List<Rental>>(_rentalDal.GetAll(x => x.CarId == rentCarId), Messages.Listed);
+            return new SuccessDataResult<List<Rental>>(_rentalDal.GetAll(x => x.CarId == rentCarId), MessagesCommon.Listed);
         }
         public IResult Update(Rental rental)
         {
             _rentalDal.Update(rental);
-            return new SuccessResult(Messages.Updated);
+            return new SuccessResult(MessagesCommon.Updated);
         }
 
         public IDataResult<Rental> GetOrderByReturnDate(int carId)
@@ -74,7 +75,7 @@ namespace Business.Concrete
         public IResult UpdateDelete(Rental rental)
         {
             _rentalDal.UpdateDelete(rental);
-            return new SuccessResult(Messages.Deleted);
+            return new SuccessResult(MessagesCommon.Deleted);
         }
     }
 }

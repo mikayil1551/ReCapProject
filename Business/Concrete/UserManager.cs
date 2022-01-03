@@ -24,20 +24,20 @@ namespace Business.Concrete
         public IResult Add(User user)
         {
             _userDal.Add(user);
-            return new SuccessResult(Messages.Added);
+            return new SuccessResult(MessagesCommon.Added);
         }
         public IResult Delete(User user)
         {
             _userDal.UpdateDelete(user);
-            return new SuccessResult(Messages.Deleted);
+            return new SuccessResult(MessagesCommon.Deleted);
         }
         public IDataResult<List<User>> GetAll()
         {
             if (DateTime.Now.Hour == 18)
             {
-                return new ErrorDataResult<List<User>>(Messages.MaintenanceTime);
+                return new ErrorDataResult<List<User>>(MessagesCommon.MaintenanceTime);
             }
-            return new SuccessDataResult<List<User>>(_userDal.GetAll(x => x.IsDelete == false), Messages.Listed);
+            return new SuccessDataResult<List<User>>(_userDal.GetAll(x => x.IsDelete == false), MessagesCommon.Listed);
         }
 
         public IDataResult<User> GetById(int userId)
@@ -48,13 +48,13 @@ namespace Business.Concrete
         public IResult Update(User user)
         {
             _userDal.Update(user);
-            return new SuccessResult(Messages.Updated);
+            return new SuccessResult(MessagesCommon.Updated);
         }
 
         public IResult UpdateDelete(User user)
         {
             _userDal.UpdateDelete(user);
-            return new SuccessResult(Messages.Deleted);
+            return new SuccessResult(MessagesCommon.Deleted);
         }
     }
 }

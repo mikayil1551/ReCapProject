@@ -16,7 +16,7 @@ namespace ConsoleUI
             #region Comments
             //Lesson8();
             //Lesson9();
-            CarGetAll();
+            //CarGetAll();
             //BrandGetAll();
             //CarColorGetAll();  
             //CarDelete();
@@ -138,17 +138,17 @@ namespace ConsoleUI
             brandManager.Add(brand);
         }
 
-        private static void CarDelete()
-        {
-            CarManager carManager = new CarManager(new EfCarDal());
-            Console.WriteLine("Car'idinizi giriniz:");
-            int carId = Convert.ToInt32(Console.ReadLine());
-            Car car = new Car()
-            {
-                CarId = carId
-            };
-            carManager.Delete(car);
-        }
+        //private static void CarDelete()
+        //{
+        //    CarManager carManager = new CarManager(new EfCarDal(), ICarDal carDal, IBrandService brandService);
+        //    Console.WriteLine("Car'idinizi giriniz:");
+        //    int carId = Convert.ToInt32(Console.ReadLine());
+        //    Car car = new Car()
+        //    {
+        //        CarId = carId
+        //    };
+        //    carManager.Delete(car);
+        //}
 
         private static void ColorGetAll()
         {
@@ -168,70 +168,70 @@ namespace ConsoleUI
             }
         }
 
-        private static void CarGetAll()
-        {
-            CarManager carManager = new CarManager(new EfCarDal());
-            foreach (var car in carManager.GetAll().Data)
-            {
-                Console.WriteLine(car.CarName+"/"+car.CarId);
-            }
-        }
+        //private static void CarGetAll()
+        //{
+        //    CarManager carManager = new CarManager(new EfCarDal());
+        //    foreach (var car in carManager.GetAll().Data)
+        //    {
+        //        Console.WriteLine(car.CarName+"/"+car.CarId);
+        //    }
+        //}
 
-        private static void Lesson9()
-        {
-            try
-            {
-                CarManager carManager = new CarManager(new EfCarDal());
-                foreach (var car in carManager.GetCarDetails().Data)
-                {
-                    Console.WriteLine(car.CarName + "/" + car.BrindName + "/" + car.ColorName + "/" + car.DailyPrice);
-                }
-            }
-            catch (Exception ex)
-            {
+        //private static void Lesson9()
+        //{
+        //    try
+        //    {
+        //        CarManager carManager = new CarManager(new EfCarDal());
+        //        foreach (var car in carManager.GetCarDetails().Data)
+        //        {
+        //            Console.WriteLine(car.CarName + "/" + car.BrindName + "/" + car.ColorName + "/" + car.DailyPrice);
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
 
-                Console.WriteLine(ex);
-            }
-        }
+        //        Console.WriteLine(ex);
+        //    }
+        //}
 
-        private static void Lesson8()
-        {
-            while (true)
-            {
-                CarManager carManager = new CarManager(new EfCarDal());
-                BrandManager brandManager = new BrandManager(new EfBrandDal());
-                ColorManager colorManager = new ColorManager(new EfColorDal());
-                Console.WriteLine("Car'inizi giriniz:");
-                string carName = Console.ReadLine();
-                Console.WriteLine("GunlukFiyatinizi giriniz:");
-                decimal dailyPrice = Convert.ToDecimal(Console.ReadLine());
-                Console.WriteLine("Description'inizi giriniz:");
-                string description = Console.ReadLine();
-                foreach (var brand in brandManager.GetAll().Data)
-                {
-                    Console.WriteLine(String.Format("{0}:{1}", brand.BrandId, brand.BrandName));
-                }
-                Console.WriteLine("Brand'inizi giriniz:");
-                int brandId = Convert.ToInt32(Console.ReadLine());
-                foreach (var color in colorManager.GetAll().Data)
-                {
-                    Console.WriteLine(String.Format("{0}:{1}", color.ColorId, color.ColorName));
-                }
-                Console.WriteLine("Color'unuzu giriniz:");
-                int colorId = Convert.ToInt32(Console.ReadLine());
-                Car car = new Car()
-                {
-                    CarName = carName,
-                    DailyPrice = dailyPrice,
-                    Description = description,
-                    BrandId = brandId,
-                    ColorId = colorId,
-                    ModelYear = Convert.ToDateTime(DateTime.Now)
+        //private static void Lesson8()
+        //{
+        //    while (true)
+        //    {
+        //        CarManager carManager = new CarManager(new EfCarDal());
+        //        BrandManager brandManager = new BrandManager(new EfBrandDal());
+        //        ColorManager colorManager = new ColorManager(new EfColorDal());
+        //        Console.WriteLine("Car'inizi giriniz:");
+        //        string carName = Console.ReadLine();
+        //        Console.WriteLine("GunlukFiyatinizi giriniz:");
+        //        decimal dailyPrice = Convert.ToDecimal(Console.ReadLine());
+        //        Console.WriteLine("Description'inizi giriniz:");
+        //        string description = Console.ReadLine();
+        //        foreach (var brand in brandManager.GetAll().Data)
+        //        {
+        //            Console.WriteLine(String.Format("{0}:{1}", brand.BrandId, brand.BrandName));
+        //        }
+        //        Console.WriteLine("Brand'inizi giriniz:");
+        //        int brandId = Convert.ToInt32(Console.ReadLine());
+        //        foreach (var color in colorManager.GetAll().Data)
+        //        {
+        //            Console.WriteLine(String.Format("{0}:{1}", color.ColorId, color.ColorName));
+        //        }
+        //        Console.WriteLine("Color'unuzu giriniz:");
+        //        int colorId = Convert.ToInt32(Console.ReadLine());
+        //        Car car = new Car()
+        //        {
+        //            CarName = carName,
+        //            DailyPrice = dailyPrice,
+        //            Description = description,
+        //            BrandId = brandId,
+        //            ColorId = colorId,
+        //            ModelYear = Convert.ToDateTime(DateTime.Now)
 
-                };
-                carManager.Add(car);
-            }
-        }
+        //        };
+        //        carManager.Add(car);
+        //    }
+        //}
         //Console.WriteLine("Renk id'yi giriniz:");
         //int colorId = Convert.ToInt32(Console.ReadLine());
         //Console.WriteLine("Marka id'yi giriniz:");
@@ -245,6 +245,8 @@ namespace ConsoleUI
         //{
         //    Console.WriteLine(car.CarName);
         //}
+
+
     }
 
 
