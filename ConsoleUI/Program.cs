@@ -1,6 +1,7 @@
 ﻿using Business.Abstract;
 using Business.Concrete;
 using Business.Constants;
+using Core.Entities.Concrete;
 using DataAccess.Abstract;
 using DataAccess.Concrete.EntityFramework;
 using DataAccess.Concrete.InMemory;
@@ -106,8 +107,7 @@ namespace ConsoleUI
             {
                 FirstName = userFirstName,
                 LastName = userLastName,
-                Email = userEmail,
-                Password = userPassword
+                Email = userEmail
             };
             userManager.Add(user);
         }
