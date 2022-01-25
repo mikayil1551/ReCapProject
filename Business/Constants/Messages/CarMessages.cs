@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Business.Constants.Messages
 {
-    public class CarMessages
+    public static class CarMessages
     {
         public static string CarListedByColor = "Renge göre araba listelendi";
         public static string CarDetailsListed = "Araba detayları listelendi";

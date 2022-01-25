@@ -1,7 +1,11 @@
 ﻿using Business.Abstract;
+using Business.BusinessAspects.Autofac;
 using Business.Constants;
 using Business.Constants.Messages;
 using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Performance;
+using Core.Aspects.Autofac.Transaction;
 using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Business;
 using Core.Utilities.Results;
@@ -25,10 +29,16 @@ namespace Business.Concrete
             _carDal = carDal;
             _brandService = brandService;
         }
+        [SecuredOperation("car.add,admin")]
         [ValidationAspect(typeof(CarValidator))]
+        [CacheRemoveAspect("ICarService.Get")]
         public IResult Add(Car car)
         {
             IResult result = BusinessRules.Run(CheckIfCarCountOfBrandCorrect(car.BrandId));
+            if (result!=null)
+            {
+                return result;
+            }
             _carDal.Add(car);    
             return new SuccessResult(MessagesCommon.Added);
         }
@@ -51,10 +61,7 @@ namespace Business.Concrete
            return new SuccessResult(MessagesCommon.Deleted);
 
         }
-        //public CarManager(InMemoryCarDal inMemoryCarDal)
-        //{
-        //    this.inMemoryCarDal = inMemoryCarDal;
-        //}
+        [CacheAspect] //key,value
         public IDataResult<List<Car>> GetAll()
         {
             if (DateTime.Now.Hour == 8)
@@ -67,6 +74,10 @@ namespace Business.Concrete
         {
             return new SuccessDataResult<List<Car>>();
         }
+         
+        [CacheAspect] 
+        [PerformanceAspect(5)]//bu aspect method calisdigin da calisma suresi 5 saniyeden fazla olarsa uyarir
+
         public IDataResult<Car> GetById(int carId)
         {
             return new SuccessDataResult<Car>(_carDal.Get(c => c.CarId == carId));
@@ -83,7 +94,7 @@ namespace Business.Concrete
         {
             return new SuccessDataResult<List<Car>>(_carDal.GetAll(p => p.ColorId == colorId));
         }
-
+        [CacheRemoveAspect("ICarService.Get")]
         public IResult Update(Car car)
         {
             _carDal.Update(car);
@@ -93,6 +104,17 @@ namespace Business.Concrete
         {
             _carDal.UpdateDelete(car);
             return new SuccessResult(MessagesCommon.Deleted);
+        }
+        [TransactionScopeAspect]
+        public IResult AddTransactionalTest(Car car)
+        {
+            Add(car);
+            if (car.DailyPrice > 10)
+            {
+                throw new Exception("");
+            }
+            Add(car);
+            return null;
         }
     }
 }

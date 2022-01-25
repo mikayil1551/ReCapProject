@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Business.Constants.Messages
 {
-    public class CarImageMessages
+    public static class CarImageMessages
     {
         public static string ImageSuccessAdded = "Resim başarıyla eklendi";
     }
